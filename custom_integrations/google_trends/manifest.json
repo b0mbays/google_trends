@@ -1,0 +1,9 @@
+{
+    "domain": "google-trends",
+    "name": "Google Trends",
+    "documentation": "https://github.com/b0mbays/google-trends",
+    "requirements": ["pytrends==4.9.0"],
+    "version": "1.0.0",
+    "dependencies": [],
+    "codeowners": ["@b0mbays"]
+  }
