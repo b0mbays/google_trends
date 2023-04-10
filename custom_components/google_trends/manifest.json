@@ -5,5 +5,6 @@
     "requirements": ["pytrends==4.9.0"],
     "version": "1.0.0",
     "dependencies": [],
+    "config_flow": true,
     "codeowners": ["@b0mbays"]
   }

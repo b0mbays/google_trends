@@ -1,35 +1,64 @@
 import logging
-from datetime import timedelta
+import voluptuous as vol
+
+from homeassistant.components.sensor import PLATFORM_SCHEMA
+from homeassistant.const import CONF_NAME
+import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
-from . import DOMAIN
 from .google_trends import get_top_trends
 
 _LOGGER = logging.getLogger(__name__)
 
-SCAN_INTERVAL = timedelta(minutes=30)
+CONF_COUNTRY_CODE = "country_code"
+CONF_UPDATE_INTERVAL = "update_interval"
 
-def setup_platform(hass, config, add_entities, discovery_info=None):
-    country_code = hass.config.as_dict()["homeassistant"]["external_url"].split(".")[-1]
-    add_entities([TwitterTrendsSensor(country_code)], True)
+DEFAULT_NAME = "Google Trends"
+DEFAULT_COUNTRY_CODE = "united_kingdom"
+DEFAULT_UPDATE_INTERVAL = 60
 
-class TwitterTrendsSensor(Entity):
-    def __init__(self, country_code):
+
+async def async_setup_entry(hass, config_entry, async_add_entities):
+    country_code = config_entry.data[CONF_COUNTRY_CODE]
+    update_interval = config_entry.data[CONF_UPDATE_INTERVAL]
+    trends_count = config_entry.data[CONF_TRENDS_COUNT]
+
+    trends = get_top_trends(country_code, count=trends_count)
+
+    async_add_entities(
+        [
+            GoogleTrendsSensor(trends, idx, update_interval, country_code)
+            for idx in range(len(trends))
+        ],
+        True,
+    )
+
+
+class GoogleTrendsSensor(Entity):
+    def __init__(self, trends, idx, interval, country_code):
+        self._trends = trends
+        self._idx = idx
+        self._interval = interval
         self._country_code = country_code
-        self._state = None
-        self._trends = []
 
     @property
     def name(self):
-        return "Twitter Trends"
+        return f"Google Trend {self._idx + 1}"
 
     @property
     def state(self):
-        return self._state
+        return self._trends[self._idx]
 
     @property
-    def extra_state_attributes(self):
-        return {"trends": self._trends}
+    def should_poll(self):
+        return True
+
+    @property
+    def icon(self):
+        return "mdi:google"
+
+    @property
+    def unique_id(self):
+        return f"google_trend_{self._idx + 1}"
 
     def update(self):
-        self._trends = get_top_trends(self._country_code, count=5)
-        self._state = len(self._trends)
+        self._trends = get_top_trends(self._country_code, count=3)
