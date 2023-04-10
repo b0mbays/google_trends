@@ -1,6 +1,6 @@
 {
   "name": "Google Trends",
-  "domains": ["google-trends"],
-  "documentation": "https://github.com/b0mbays/google-trends/blob/main/README.md",
-  "version": "1.0.1"
+  "domains": ["google_trends"],
+  "documentation": "https://github.com/b0mbays/google_trends/blob/main/README.md",
+  "version": "1.0.0"
 }
