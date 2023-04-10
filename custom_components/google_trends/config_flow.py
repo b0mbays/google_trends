@@ -19,7 +19,7 @@ class GoogleTrendsFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 CONF_COUNTRY_CODE, description={"suggested_value": "united_kingdom"}
             ): str,
             vol.Required(
-                CONF_UPDATE_INTERVAL, default=60, description={"suggested_value": 60}
+                CONF_UPDATE_INTERVAL, default=5, description={"suggested_value": 5}
             ): int,
             vol.Required(
                 CONF_TRENDS_COUNT, default=5, description={"suggested_value": 5}

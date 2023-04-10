@@ -8,6 +8,7 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 from .google_trends import get_top_trends
 from .const import CONF_COUNTRY_CODE, CONF_UPDATE_INTERVAL, CONF_TRENDS_COUNT
+from homeassistant.helpers.event import async_call_later
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -51,9 +52,6 @@ class GoogleTrendsSensor(Entity):
     def state(self):
         return self._trends[self._idx]
 
-    @property
-    def should_poll(self):
-        return True
 
     @property
     def icon(self):
@@ -63,5 +61,13 @@ class GoogleTrendsSensor(Entity):
     def unique_id(self):
         return f"google_trend_{self._idx + 1}"
 
-    def update(self):
-        self._trends = get_top_trends(self._country_code, count=len(self._trends))
+    async def async_added_to_hass(self):
+        async def async_update_and_schedule(next_update):
+            await self.async_update()
+            async_call_later(self.hass, next_update, async_update_and_schedule)
+
+        await async_update_and_schedule(self._interval.total_seconds())
+
+    async def async_update(self):
+        self._trends = await self.hass.async_add_executor_job(
+            get_top_trends, self._country_code, len(self._trends))
