@@ -1,10 +1,6 @@
-from homeassistant.config_entries import ConfigEntry
+from homeassistant.config_entries import ConfigEntry, OptionsFlow
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.typing import ConfigType
-from homeassistant.helpers import config_entry_oauth2_flow
-from homeassistant.helpers.typing import ConfigType
-from homeassistant.config_entries import ConfigEntry, OptionsFlowHandler
-
 
 from .const import DOMAIN
 
@@ -20,7 +16,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     return await hass.config_entries.async_forward_entry_unload(entry, "sensor")
 
-class GoogleTrendsOptionsFlowHandler(OptionsFlowHandler):
+class GoogleTrendsOptionsFlowHandler(OptionsFlow):
     """Handle Google Trends options."""
 
     def __init__(self, config_entry: ConfigEntry):

@@ -21,19 +21,19 @@ DEFAULT_UPDATE_INTERVAL = 60
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the Google Trends sensors."""
-    country_code = config_entry.options.get(CONF_COUNTRY_CODE, DEFAULT_COUNTRY_CODE)
-    trends_count = config_entry.options.get(CONF_TRENDS_COUNT, DEFAULT_TRENDS_COUNT)
-    update_interval = timedelta(
-        minutes=config_entry.options.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
-    )
+    country_code = config_entry.data[CONF_COUNTRY_CODE]
+    trends_count = config_entry.data[CONF_TRENDS_COUNT]
+    update_interval = timedelta(minutes=config_entry.data[CONF_UPDATE_INTERVAL])
 
     trends = await hass.async_add_executor_job(
         get_top_trends, str(country_code), trends_count
     )
 
-    async_add_entities(
-        [GoogleTrendsSensor(trends, update_interval, country_code)], True
-    )
+    async_add_entities([
+        GoogleTrendsSensor(trends, update_interval, country_code, idx)
+        for idx in range(trends_count)
+    ], True)
+
 
 class GoogleTrendsSensor(Entity):
     def __init__(self, trends, interval, country_code, idx):
