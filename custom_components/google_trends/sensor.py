@@ -31,27 +31,25 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     )
 
     async_add_entities([
-        GoogleTrendsSensor(trends, update_interval, country_code, idx)
-        for idx in range(trends_count)
+        GoogleTrendsSensor(trends, update_interval, country_code)
     ], True)
 
 
 class GoogleTrendsSensor(Entity):
-    def __init__(self, trends, interval, country_code, idx):
+    def __init__(self, trends, interval, country_code):
         """Initialize the Google Trends sensor."""
         self._trends = trends
         self._interval = interval
         self._country_code = country_code
-        self._idx = idx
+        self._index = 0
 
     @property
     def name(self):
-        return f"Google Trend {self._idx + 1}"
+        return f"Google Trend"
 
     @property
     def state(self):
-        return self._trends[self._idx]
-
+        return self._trends[self._index]
 
     @property
     def icon(self):
@@ -59,7 +57,7 @@ class GoogleTrendsSensor(Entity):
 
     @property
     def unique_id(self):
-        return f"google_trend_{self._idx + 1}"
+        return f"google_trend"
 
     async def async_added_to_hass(self):
         async def async_update_and_schedule(next_update):
@@ -71,3 +69,4 @@ class GoogleTrendsSensor(Entity):
     async def async_update(self):
         self._trends = await self.hass.async_add_executor_job(
             get_top_trends, self._country_code, len(self._trends))
+        self._index = (self._index + 1) % len(self._trends)
