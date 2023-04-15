@@ -11,6 +11,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.async_create_task(
         hass.config_entries.async_forward_entry_setup(entry, "sensor")
     )
+    hass.http.register_static_path(
+        "/custom_components/google_trends/www", hass.config.path("custom_components/google_trends/www")
+    )
+
     return True
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
