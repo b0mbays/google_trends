@@ -29,7 +29,7 @@ There is also a custom lovelace card for displaying the entity that you can inst
 
 ### **HACS:**
 
-1. Go to the HACS panel in Home Assistant.
+1. Go to the HACS panel in Home Assistant and go to "Integrations".
 2. Click on the three dots in the top right corner and choose "Custom repositories".
 3. Enter `b0mbays/google-trends` in the "Add custom repository" field, select "Integration" from the "Category" dropdown, and click on the "Add" button.
 4. Once the custom repository is added, you can install the integration through HACS. You should see "Google Trends" in the "Integrations" tab. Click on "Download" to add it to your Home Assistant instance.
