@@ -2,5 +2,5 @@
   "name": "Google Trends",
   "domains": ["google_trends"],
   "documentation": "https://github.com/b0mbays/google_trends/blob/main/README.md",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

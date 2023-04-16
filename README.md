@@ -1,40 +1,58 @@
-# Google Trends Integration for Home Assistant
+# <center>Google Trends Integration for Home Assistant </center>
 
-This custom integration for Home Assistant retrieves the top Google search trends for a specific country and displays them as individual sensor entities.
+<p align="center">
+  <img src="custom_components/google_trends/www/google-trends-logo.png" width=20% height=20%>
 
-## Features
 
-- Configurable number of search trends
+This custom integration for Home Assistant retrieves the top Google search trends for a specific country. The entity will update every 10 seconds displaying the next trend.
+
+There is also a custom lovelace card for displaying the entity that you can install by visiting the Github page [here](https://github.com/b0mbays/google-trends-card) after installing the integration.
+
+<p align="center">
+  <img src="images/demo.png" width=60% height=60%>
+</p>
+<br/><br/>
+
+✨**Features:**
+============
+
+- Retrieves the top Google search trends for a specific country
+- Custom lovelace card for showing the trends
+- Configurable number of trends
 - Configurable update interval
-- Configurable country code for localized trends
+- Configurable country code
 
-## Installation
+<br/><br/>
 
-1. Create a `custom_components` folder in your Home Assistant's `config` directory if it doesn't already exist.
-2. Clone or download this repository and copy the `google_trends` folder into the `custom_components` directory.
-3. Restart Home Assistant.
+🚀**Installation:**
+============
 
-## Configuration
+### **HACS:**
 
-To configure the Google Trends integration, go to the Integrations page in the Home Assistant UI, click the "+" button, and search for "Google Trends".
+1. Go to the HACS panel in Home Assistant.
+2. Click on the three dots in the top right corner and choose "Custom repositories".
+3. Enter `b0mbays/google-trends` in the "Add custom repository" field, select "Integration" from the "Category" dropdown, and click on the "Add" button.
+4. Once the custom repository is added, you can install the integration through HACS. You should see "Google Trends" in the "Integrations" tab. Click on "Download" to add it to your Home Assistant instance.
+5. Restart Home Assistant to load the custom integration.
+6. Install the integration from the Integrations menu, setting your custom number of trends, update interval and country. (Country examples below)
+7. Install the custom google-trends-card from [here](https://github.com/b0mbays/google-trends-card).
 
-Fill in the following fields:
+<br/><br/>
 
-- `Country`: The country code for the country you want to retrieve trends for (e.g., "united_states" for the United States, "united_kingdom" for the United Kingdom).
-- `Number of Trends`: The number of top trends you want to retrieve (e.g., 5, 10).
-- `Update Interval`: The interval in minutes at which the trends should update (e.g., 60 for hourly updates).
+⚙️**Configuration**
+============
 
-Click "Submit" to create the integration. The Google Trends sensors will be added to Home Assistant and can be used in automations, scripts, and the UI.
+### **Country Examples:**
 
-## Example Lovelace Card
-
-Here's an example of a Lovelace card configuration to display the Google Trends sensors:
-
-```yaml
-type: 'custom:auto-entities'
-card:
-  type: entities
-  title: Google Trends
-filter:
-  include:
-    - entity_id: sensor.google_trend_*
+```
+United States: united_states
+United Kingdom: united_kingdom
+Canada: canada
+Australia: australia
+Germany: germany
+France: france
+India: india
+Brazil: brazil
+Japan: japan
+Spain: spain
+```

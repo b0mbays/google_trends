@@ -17,7 +17,7 @@ CONF_UPDATE_INTERVAL = "update_interval"
 
 DEFAULT_NAME = "Google Trends"
 DEFAULT_COUNTRY_CODE = "united_kingdom"
-DEFAULT_UPDATE_INTERVAL = 60
+DEFAULT_UPDATE_INTERVAL = 5
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
