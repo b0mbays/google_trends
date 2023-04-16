@@ -9,7 +9,7 @@ This custom integration for Home Assistant retrieves the top Google search trend
 There is also a custom lovelace card for displaying the entity that you can install by visiting the Github page [here](https://github.com/b0mbays/google-trends-card) after installing the integration.
 
 <p align="center">
-  <img src="images/demo.png" width=60% height=60%>
+  <img src="images/demo.png" width=75% height=75%>
 </p>
 <br/><br/>
 
