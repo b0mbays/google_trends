@@ -1,4 +1,4 @@
-# <center>Google Trends Integration for Home Assistant </center>
+# <center>HA - Google Trends</center>
 
 <p align="center">
   <img src="custom_components/google_trends/www/google-trends-logo.png" width=20% height=20%>
